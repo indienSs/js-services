@@ -16,11 +16,11 @@ let db;
 connectToDb(err => {
   if (!err) {
     app.listen(PORT, () => {
-      console.log("server started on port", PORT);
+      console.log("server started on port " + PORT);
     });
     db = getDb();
   } else {
-    console.log("DB connection error" + err);
+    console.log("DB connection error " + err);
   }
 });
 
@@ -28,7 +28,9 @@ app.get("/cars", (req, res) => {
   const cars = [];
 
   db.collection("stock")
-    .find(req.query)
+    .find()
+    .limit(20)
+    .skip(0)
     .forEach(car => cars.push(car))
     .then(() => {
       res.status(200).json(cars);
