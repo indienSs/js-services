@@ -1,10 +1,14 @@
 import { CarType } from "../../types/CarType";
 import TableElement from "../table-element";
 
-const CarsTable = ({ cars }: CarType[]) => {
+interface ICarsTable {
+  cars: CarType[];
+}
+
+const CarsTable = ({ cars }: ICarsTable) => {
   return (
-    <div>
-      <div>
+    <div className="CarsTable">
+      <div className="CarsTable_header">
         <p>ID</p>
         <p>Марка/модель</p>
         <p>Модификация</p>

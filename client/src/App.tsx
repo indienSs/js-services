@@ -1,35 +1,53 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import CarsTable from "../components/cars-table";
-import CarMarks from "../components/car-marks";
-import CarModels from "../components/car-models";
-import { CarType } from "../types/CarType";
+import CarsTable from "./components/cars-table";
+import CarMarks from "./components/car-marks";
+import CarModels from "./components/car-models";
+import Pagination from "./components/pagination";
+import { CarType } from "./types/CarType";
+import { api } from "./api";
 
-const SERVER_LINK = process.env.SERVER_LINK;
+const url = process.env.SERVER_LINK;
 
 function App() {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [cars, setCars] = useState<CarType[]>([]);
   const [mark, setMark] = useState("");
-  const [models, setModels] = useState([]);
+  const [models, setModels] = useState<string[]>([]);
+
+  const onChangePage = (page: number) => {
+    setPage(page);
+  };
+
+  const onChangeMark = (mark: string) => {
+    setMark(mark);
+  };
+
+  const onChangeModel = (model: string) => {
+    if (models.indexOf(model) !== -1) {
+      setModels(models.filter(el => el !== model));
+    }
+    setModels(prev => [...prev, model]);
+  };
 
   useEffect(() => {
     async function fetchCars() {
       try {
-        const { data } = await axios.get(`/cars?page=${page}&mark=${mark}&models=${models.join(",")}`);
-        setCars(data);
+        const { data } = await api.get<CarType[]>(`/cars?page=${page}&mark=${mark}&models=${models.join(",")}`);
+        if (data) setCars(data);
       } catch (error) {
         console.log(error);
       }
     }
-  }, []);
+    fetchCars();
+  }, [page, mark, models]);
 
   return (
     <div className="App">
-      <CarMarks />
-      <CarModels />
+      <CarMarks onChangeMark={onChangeMark} mark={mark} />
+      <CarModels onChangeModel={onChangeModel} models={models} />
       <CarsTable cars={cars} />
-      <Pagination />
+      {/* <Pagination page={page} limit={20} count={1000} indent={1} onChange={onChangePage} makeLink={() => {}} /> */}
     </div>
   );
 }

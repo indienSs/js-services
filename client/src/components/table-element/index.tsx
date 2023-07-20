@@ -1,7 +1,11 @@
 import { CarType } from "../../types/CarType";
 import "./styles.css";
 
-const TableElement = ({ car }: { CarType }) => {
+interface ITableElement {
+  car: CarType;
+}
+
+const TableElement = ({ car }: ITableElement) => {
   return (
     <div>
       <p>{car._id}</p>

@@ -1,0 +1,10 @@
+.CarsTable {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+}
+
+.CarsTable_header {
+  display: flex;
+  justify-content: space-between;
+}
