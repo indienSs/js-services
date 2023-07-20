@@ -1,4 +1,4 @@
-export type CarMark = {
+export type CarMarkType = {
   mark: string;
   amount: number;
 };

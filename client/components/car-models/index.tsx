@@ -1,4 +1,4 @@
-import { CarModelType } from "@/types/CarModelType";
+import { CarModelType } from "../../types/CarModelType";
 import React from "react";
 
 const CarModels = (models: CarModelType[]) => {
