@@ -27,12 +27,32 @@ connectToDb(err => {
 app.get("/cars", (req, res) => {
   const cars = [];
 
+  let queryParams = {};
+
+  if (req.query.mark) {
+    queryParams = { ...req.query.mark };
+    if (req.query.models) {
+      queryParams = { ...queryParams, models: { $in: req.query.models.split(",") } };
+    }
+  }
+
   db.collection("stock")
-    .find()
+    .find(queryParams)
     .limit(20)
-    .skip(0)
+    .skip(req.query.page * 20)
     .forEach(car => cars.push(car))
     .then(() => {
       res.status(200).json(cars);
+    });
+});
+
+app.get("/cars/marks", (req, res) => {
+  const marks = [];
+
+  db.collection("stock")
+    .distinct("mark")
+    .forEach(mark => marks.push(mark))
+    .then(() => {
+      res.status(200).json(marks);
     });
 });
