@@ -24,10 +24,9 @@ function App() {
   };
 
   const onChangeModel = (model: string) => {
-    if (models.indexOf(model) !== -1) {
-      setModels(models.filter(el => el !== model));
+    if (models.indexOf(model) === -1) {
+      setModels(prev => [...prev, model]);
     }
-    setModels(prev => [...prev, model]);
   };
 
   useEffect(() => {

@@ -12,11 +12,15 @@ const CarModels = ({ models, mark, onChangeModel }: ICarModels) => {
 
   useEffect(() => {
     async function fetchModels() {
-      const { data } = await api.get<string[]>(`/models?mark=${mark}`);
+      const { data } = await api.get<string[]>(`/cars/models?mark=${mark}`);
       if (data) setApiModels(data);
     }
     fetchModels();
   }, [mark]);
+
+  const changeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    onChangeModel(event.target.value);
+  };
 
   if (!mark) {
     return;
@@ -25,7 +29,11 @@ const CarModels = ({ models, mark, onChangeModel }: ICarModels) => {
   return (
     <div>
       <p>Модель:</p>
-      <input type="text" />
+      <select value={models.join(",")} onChange={changeSelect}>
+        {apiModels.map(element => (
+          <option key={element}>{element}</option>
+        ))}
+      </select>
     </div>
   );
 };
