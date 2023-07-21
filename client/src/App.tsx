@@ -29,6 +29,10 @@ function App() {
     }
   };
 
+  const onRemoveModel = (model: string) => {
+    setModels(models.filter(element => element !== model));
+  };
+
   useEffect(() => {
     async function fetchCars() {
       try {
@@ -44,7 +48,7 @@ function App() {
   return (
     <div className="App">
       <CarMarks onChangeMark={onChangeMark} mark={mark} />
-      <CarModels onChangeModel={onChangeModel} models={models} mark={mark} />
+      <CarModels onChangeModel={onChangeModel} models={models} mark={mark} onRemoveModel={onRemoveModel} />
       <CarsTable cars={cars} />
       {/* <Pagination page={page} limit={20} count={1000} indent={1} onChange={onChangePage} makeLink={() => {}} /> */}
     </div>
