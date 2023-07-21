@@ -56,3 +56,15 @@ app.get("/cars/marks", (req, res) => {
       res.status(200).json(marks);
     });
 });
+
+app.get("/cars/models", (req, res) => {
+  const models = [];
+
+  db.collection("stock")
+    .find(req.mark)
+    .distinct("model")
+    .forEach(model => models.push(model))
+    .then(() => {
+      res.status(200).json(models);
+    });
+});

@@ -45,7 +45,7 @@ function App() {
   return (
     <div className="App">
       <CarMarks onChangeMark={onChangeMark} mark={mark} />
-      <CarModels onChangeModel={onChangeModel} models={models} />
+      <CarModels onChangeModel={onChangeModel} models={models} mark={mark} />
       <CarsTable cars={cars} />
       {/* <Pagination page={page} limit={20} count={1000} indent={1} onChange={onChangePage} makeLink={() => {}} /> */}
     </div>
